@@ -1,6 +1,6 @@
-Map Reduce Case-Study
+# Map Reduce Case-Study
 --------------
-> Files and their Descriptions:
+> _Files and their Descriptions:_
 > - wc.jar : Word Count jar file.
 > - wc_0reducer : Default mappers with 0 reducers.
 > - wc_2reducer : Default mappers with 2 reducers.
