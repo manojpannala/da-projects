@@ -1,0 +1,42 @@
+Database - cts_jig13302
+
+1. CREATE EXTERNAL TABLE u_data ( userId INT, movieId INT, rating INT, time STRING ) ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t' STORED AS TEXTFILE;
+
+2. Describe u_data;
+
+3. LOAD DATA LOCAL INPATH '/home/data/cts/u.data' OVERWRITE INTO TABLE u_data; 
+SELECT * FROM u_data;
+
+4. SELECT movieid, COUNT(userid) AS no from u_data GROUP BY movieid ORDER BY no;
+
+5. SELECT userid, COUNT(movieid) AS no from u_data GROUP BY userid ORDER BY no;
+
+6. CREATE EXTERNAL TABLE u_user (userid INT, age INT, gender STRING, occupation STRING, zip INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS TEXTFILE;
+
+7. DESCRIBE u_user; 
+
+8. LOAD DATA LOCAL INPATH 'home/data/cts/u.user' OVERWRITE INTO TABLE u_user;
+SELECT * from u_user;
+
+9. SELECT COUNT(*) from u_user;
+
+10. SELECT gender, COUNT(*) from u_user GROUP BY gender;
+
+11. (a) Reduce Side Join
+
+SELECT * from u_user usr JOIN u_data mov ON usr.userid=mov.userid;
+
+(b) Map-side Join
+
+SELECT /*+ MAPJOIN(usr) */ * from u_user usr JOIN u_data mov ON usr.userid=mov.userid;
+
+Reduce join is faster when compared to Map-side join. In local VM the difference is much more when compared to AWS cluster.
+
+12. CREATE TABLE u_user_partitioned ( userId INT, age INT , zip INT, gender STRING ) PARTITIONED BY (occupation STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY '|' STORED AS  SEQUENCEFILE;
+INSERT INTO TABLE u_user_partitioned PARTITION(occupation) SELECT userid, age, zip, gender, occupation from u_user;
+
+
+13. (a) With Partition
+SELECT gender, occupation , COUNT(*) from u_user_partitioned GROUP BY gender, occupation;
+
+Performance of without partition is more than the one with the partitioned table.
