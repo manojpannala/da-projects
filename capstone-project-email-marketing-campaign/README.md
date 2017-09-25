@@ -1,4 +1,4 @@
-#Email Marketing Campaign
+Email Marketing Campaign
 ----------------
 This is the final **CAPSTONE PROJECT** from the **Jigsaw Academy!**
 ----------------
