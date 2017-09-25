@@ -1,6 +1,6 @@
 # Email Marketing Campaign
 
-_This is the final **CAPSTONE PROJECT** from the **Jigsaw Academy!**_
+## _This is the final **CAPSTONE PROJECT** from the **Jigsaw Academy!**_
 
 ### Based on the datasets available on the Jigsaw Lab, the project has derived.
 
